@@ -27,9 +27,10 @@ export const createEmployee = async (req, res) => {
         errors[key] = error.errors[key].message;
       });
 
-      return res.status(400).send(errors);
+      return res.status(500).send(errors);
     }
-    return res.status(500).json({ message: error.message });
+
+    // return res.status(500).json({ message: error.message });
   }
 };
 
@@ -48,11 +49,12 @@ export const updateEmployee = async (req, res) => {
 // Delete Employee
 export const deleteEmployee = async (req, res) => {
   try {
-    const postRemove = await Post.deleteMany({ _id: { $in: req.params.id } });
+    // const postRemove = await Post.deleteMany({ _id: { $in: req.params.id } });
+    const postRemove = await Post.findByIdAndDelete(req.params.id);
 
     if (!postRemove) return res.sendStatus(400);
 
-    return res.sendStatus(200);
+    return res.sendStatus(204);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

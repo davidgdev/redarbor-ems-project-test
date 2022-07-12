@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 
 const minAge = new Date();
 const maxAge = new Date();
@@ -28,7 +29,7 @@ const postSchema = new mongoose.Schema(
       type: String,
       trim: true,
       lowercase: true,
-      unique: [true, "Email already exists"],
+      unique: true,
       required: [true, "Email address is required"],
       validate: [validateEmail, "Please fill a valid email address"],
       match: [
@@ -40,8 +41,8 @@ const postSchema = new mongoose.Schema(
       type: Date,
       required: [true, "Birthdate is required"],
       trim: true,
-      min: [minAge, "Does not meet the age required"],
-      max: [maxAge, "Does not meet the age required"],
+      min: [minAge, "Age is above 65year old"],
+      max: [maxAge, "Age is below 18yrs old"],
     },
     RoleId: {
       type: Number,
@@ -56,5 +57,7 @@ const postSchema = new mongoose.Schema(
     versionKey: false,
   }
 );
+
+postSchema.plugin(uniqueValidator, { message: "Email already exists" });
 
 export default mongoose.model("Post", postSchema);
