@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server --watch server --ignore client"
+    "dev": "nodemon server --watch server --ignore client",
+    "build": "npm install --prefix client && npm run build --prefix client && rm -rf client/node_modules",
+    "start": "node server"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "http-errors": "^2.0.0",
     "mongoose": "^6.4.4",
     "mongoose-unique-validator": "^3.1.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
   }
 }

@@ -9,19 +9,12 @@ export default function Navbar() {
       <div className="container mx-auto flex flex-wrap items-center justify-between">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <Link
+            to="/"
             className="flex fle-rowtext-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
-            to="#pablo"
           >
             <img src={logo} alt="logo" className="w-4 mr-2" /> Employee
             Management
           </Link>
-          <button
-            className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
-            type="button"
-            onClick={() => setNavbarOpen(!navbarOpen)}
-          >
-            <i className="fas fa-bars"></i>
-          </button>
         </div>
         <div
           className={
@@ -33,8 +26,8 @@ export default function Navbar() {
           <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
             <li className="nav-item">
               <Link
+                to="https://github.com/davidgdev/redarbor-ems-project-test"
                 className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                to="#pablo"
               >
                 <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i>
                 <span className="ml-2">About</span>
@@ -42,8 +35,8 @@ export default function Navbar() {
             </li>
             <li className="nav-item">
               <Link
+                to="https://github.com/davidgdev/redarbor-ems-project-test/blob/main/README.md"
                 className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                to="#pablo"
               >
                 <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i>
                 <span className="ml-2">App Info</span>
@@ -51,8 +44,8 @@ export default function Navbar() {
             </li>
             <li className="nav-item">
               <Link
+                to="https://www.linkedin.com/in/ndavidgaleano/"
                 className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                to="#pablo"
               >
                 <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i>
                 <span className="ml-2">Contact</span>
