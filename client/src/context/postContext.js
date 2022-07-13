@@ -6,6 +6,7 @@ import {
   getPostRequest,
   updatePostRequest,
   deletePostRequest,
+  deleteMultiplePostRequest,
 } from "../api/posts";
 
 const postContext = createContext();
@@ -17,6 +18,9 @@ export const usePost = () => {
 
 export const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
+  const [checkbox, setCheckbox] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [values, setValues] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -24,6 +28,10 @@ export const PostProvider = ({ children }) => {
       setPosts(res.data);
     })();
   }, []);
+
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
 
   const createPost = async (post) => {
     try {
@@ -41,6 +49,16 @@ export const PostProvider = ({ children }) => {
     console.log(res);
     if (res.status === 204) {
       setPosts(posts.filter((post) => post._id !== id));
+    }
+  };
+
+  const deleteMultiple = async (ids) => {
+    const res = await deleteMultiplePostRequest(ids);
+    if (res.status === 204) {
+      for (let id of ids) {
+        setPosts((posts) => posts.filter((post) => post._id !== id));
+      }
+      setCheckbox(false);
     }
   };
 
@@ -66,6 +84,11 @@ export const PostProvider = ({ children }) => {
     getPost,
     updatePost,
     deletePost,
+    deleteMultiple,
+    checkbox,
+    setCheckbox,
+    selected,
+    setSelected,
   };
 
   return <postContext.Provider value={value}>{children}</postContext.Provider>;

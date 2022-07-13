@@ -49,10 +49,27 @@ export const updateEmployee = async (req, res) => {
 // Delete Employee
 export const deleteEmployee = async (req, res) => {
   try {
-    // const postRemove = await Post.deleteMany({ _id: { $in: req.params.id } });
-    const postRemove = await Post.findByIdAndDelete(req.params.id);
+    const postRemove = await Post.deleteMany({ _id: { $in: req.params.id } });
+    // const postRemove = await Post.findByIdAndDelete(req.params.id);
 
     if (!postRemove) return res.sendStatus(400);
+
+    return res.sendStatus(204);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// Delete Multiple Employees
+export const deleteMultiple = async (req, res) => {
+  try {
+    const ids = req.params.ids.split(",");
+
+    const removeMultiple = await Post.deleteMany({ _id: { $in: ids } });
+
+    if (!removeMultiple) return sendStatus(400);
+
+    // res.send(req.params);
 
     return res.sendStatus(204);
   } catch (error) {

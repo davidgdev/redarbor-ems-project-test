@@ -11,5 +11,8 @@ export const updatePostRequest = async (id, newFields) =>
 // Delete Employee
 export const deletePostRequest = async (id) =>
   await axios.delete(`/employees/` + id);
+// Delte Multiple
+export const deleteMultiplePostRequest = async (ids) =>
+  await axios.delete(`/employees/delete/${ids}`);
 // Get Employee
 export const getPostRequest = async (id) => await axios.get("/employees/" + id);

@@ -3,13 +3,26 @@ import toast from "react-hot-toast";
 import { usePost } from "../context/postContext";
 
 export default function Card({ post }) {
-  const { deletePost } = usePost();
+  const { deletePost, checkbox, setCheckbox, selected, setSelected } =
+    usePost();
+
+  const handleOnClick = () => {
+    setCheckbox(!checkbox);
+    selected.length = 0;
+  };
+
+  const handleCheckbox = (event) => {
+    const { checked, value } = event.currentTarget;
+    setSelected((prev) =>
+      checked ? [...prev, value] : prev.filter((val) => val !== value)
+    );
+  };
 
   const handleDelete = (id) => {
     toast(
       (t) => (
-        <div>
-          <p className="text-white">Do you want to delete this post?</p>
+        <div className="py-6">
+          <p className="text-white mb-3">Do you want to delete this post?</p>
           <div>
             <button
               className="bg-red-500 hover:bg-red-400 px-3 py-2 text-sm "
@@ -60,8 +73,18 @@ export default function Card({ post }) {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-zinc-800 text-white rounded-sm shadow-md shadow-black hover:bg-zinc-700 hover:cursor-pointer">
-      <div className="px-4 py-7">
+    <div className="bg-zinc-800 text-white rounded-sm shadow-md shadow-black hover:bg-zinc-700 hover:cursor-pointer box-content px-4 py-5">
+      {checkbox && (
+        <div className="py-1">
+          <input
+            type="checkbox"
+            value={post._id}
+            className="border-gray-300 rounded h-4 w-4"
+            onChange={(e) => handleCheckbox(e)}
+          />
+        </div>
+      )}
+      <div onClick={handleOnClick}>
         <div className="flex justify-between mb-3">
           <h2 className="text-lg">
             {post.Name} {post.Surname}
@@ -79,21 +102,23 @@ export default function Card({ post }) {
           </p>
         </div>
         <div className="flex">
-          <buton
-            className="bg-green-600 text-sm px-2 py-1 rounded-sm mr-2 hover:bg-green-700"
+          <button
+            className="bg-green-600 text-sm px-2 py-1 rounded-sm mr-2 hover:bg-green-700 disabled:bg-gray-400"
             onClick={() => navigate(`/employees/${post._id}`)}
+            disabled={checkbox}
           >
             Edit
-          </buton>
-          <buton
-            className="bg-red-600 text-sm px-2 py-1 rounded-sm hover:bg-red-700"
+          </button>
+          <button
+            className="bg-red-600 text-sm px-2 py-1 rounded-sm hover:bg-red-700 disabled:bg-gray-400"
             onClick={(e) => {
               e.stopPropagation();
               handleDelete(post._id);
             }}
+            disabled={checkbox}
           >
-            delete
-          </buton>
+            Delete
+          </button>
         </div>
       </div>
     </div>
