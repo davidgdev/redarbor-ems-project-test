@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { usePost } from "../context/postContext";
-import { CgProfile } from "react-icons/cg";
 
 import profilePicture from "../images/profile-picture.svg";
 
