@@ -50,7 +50,6 @@ export const updateEmployee = async (req, res) => {
 export const deleteEmployee = async (req, res) => {
   try {
     const postRemove = await Post.deleteMany({ _id: { $in: req.params.id } });
-    // const postRemove = await Post.findByIdAndDelete(req.params.id);
 
     if (!postRemove) return res.sendStatus(400);
 
@@ -68,8 +67,6 @@ export const deleteMultiple = async (req, res) => {
     const removeMultiple = await Post.deleteMany({ _id: { $in: ids } });
 
     if (!removeMultiple) return sendStatus(400);
-
-    // res.send(req.params);
 
     return res.sendStatus(204);
   } catch (error) {

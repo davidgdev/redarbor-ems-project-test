@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { usePost } from "../context/postContext";
+import { CgProfile } from "react-icons/cg";
+
+import profilePicture from "../images/profile-picture.svg";
 
 export default function Card({ post }) {
   const { deletePost, checkbox, setCheckbox, selected, setSelected } =
@@ -73,7 +76,7 @@ export default function Card({ post }) {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-zinc-800 text-white rounded-sm shadow-md shadow-black hover:bg-zinc-700 hover:cursor-pointer box-content px-4 py-5">
+    <article className="bg-zinc-800 text-white rounded-lg shadow-md shadow-black hover:bg-zinc-700 hover:cursor-pointer box-content px-4 py-5">
       {checkbox && (
         <div className="py-1">
           <input
@@ -85,32 +88,35 @@ export default function Card({ post }) {
         </div>
       )}
       <div onClick={handleOnClick}>
-        <div className="flex justify-between mb-3">
-          <h2 className="text-lg">
-            {post.Name} {post.Surname}
-          </h2>
+        <div className="flex flex-row justify-between">
+          <div className="flex flex-col mb-3">
+            <h2 className="text-md font-medium">
+              {post.Name} {post.Surname}
+            </h2>
+            <p className="text-sm">{roleName(post.RoleId)}</p>
+          </div>
+          <div className="mr-4">
+            <img src={profilePicture} alt="Profile Picture" className="w-10" />
+          </div>
         </div>
         <div className="mb-4">
-          <p>
+          <p className="text-sm">
             <strong>Email:</strong> {post.Email}
           </p>
-          <p>
+          <p className="text-sm">
             <strong>Birth Date:</strong> {birthDate(post.DateOfBirth)}
-          </p>
-          <p>
-            <strong>Role:</strong> {roleName(post.RoleId)}
           </p>
         </div>
         <div className="flex">
           <button
-            className="bg-green-600 text-sm px-2 py-1 rounded-sm mr-2 hover:bg-green-700 disabled:bg-gray-400"
+            className="bg-green-600 text-sm px-2 py-1 rounded mr-2 hover:bg-green-700 disabled:bg-gray-400"
             onClick={() => navigate(`/employees/${post._id}`)}
             disabled={checkbox}
           >
             Edit
           </button>
           <button
-            className="bg-red-600 text-sm px-2 py-1 rounded-sm hover:bg-red-700 disabled:bg-gray-400"
+            className="bg-red-600 text-sm px-2 py-1 rounded hover:bg-red-700 disabled:bg-gray-400"
             onClick={(e) => {
               e.stopPropagation();
               handleDelete(post._id);
@@ -121,6 +127,6 @@ export default function Card({ post }) {
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

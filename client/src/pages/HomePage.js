@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import Card from "../components/Card";
 import { AiOutlineDelete } from "react-icons/ai";
 import { VscEmptyWindow } from "react-icons/vsc";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import toast from "react-hot-toast";
 
 export function HomePage() {
-  const { posts, checkbox, selected, deleteMultiple } = usePost();
+  const { posts, checkbox, selected, deleteMultiple, isLoading } = usePost();
 
   const handleDeleteMultiple = (selected) => {
     toast(
@@ -41,22 +42,28 @@ export function HomePage() {
   };
 
   const renderEmployees = () => {
-    if (posts.length === 0) {
+    if (isLoading) {
+      return (
+        <div className="flex flex-col justify-center items-center">
+          <AiOutlineLoading3Quarters className="w-20 h-20 animate-spin text-white mt-20" />
+        </div>
+      );
+    } else if (posts.length === 0) {
       return (
         <div className="flex flex-col justify-center items-center">
           <VscEmptyWindow className="w-48 h-48 text-white" />
           <h1 className="text-white text-2xl">There are no employees</h1>
         </div>
       );
+    } else {
+      return (
+        <section className="grid md:grid-cols-2 lg:grid-vols-3 xl:grid-cols-4 gap-4">
+          {posts.map((post) => (
+            <Card post={post} key={post._id} />
+          ))}
+        </section>
+      );
     }
-
-    return (
-      <div className="grid md:grid-cols-2 lg:grid-vols-3 xl:grid-cols-4 gap-4">
-        {posts.map((post) => (
-          <Card post={post} key={post._id} />
-        ))}
-      </div>
-    );
   };
 
   return (
@@ -68,7 +75,7 @@ export function HomePage() {
         <div>
           {checkbox ? (
             <button
-              className="flex justify-between hover:bg-red-700 bg-red-600  px-4 w-40 py-2 disabled:bg-gray-400 text-white"
+              className="flex justify-between hover:bg-red-700 bg-red-600  px-4 w-40 py-2 disabled:bg-gray-400 text-white rounded"
               disabled={selected.length === 0}
               onClick={() => handleDeleteMultiple(selected)}
             >
@@ -77,7 +84,7 @@ export function HomePage() {
           ) : (
             <Link
               to="/create-employee"
-              className="bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-500"
+              className="bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-500 rounded"
             >
               Create New Employee
             </Link>
